@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script>
+		var $={
+			ajax:function(method,url,async,data,success){
+				var method=method  || 'get';
+				var url =url  ||  '';
+				var async=async  || true;
+				var data=data ||  null;
+				var success=success || function(){}
+
+				if(window.XMLHttpRequest){
+					var xhr=new XMLHttpRequest();
+				}else{
+					var xhr=new ActiveXObject('Microsoft.XMLHTTP');
+				}
+
+				if(method=='get'){
+					xhr.open('get',url+"?"+data,async);
+					xhr.send(null);
+				}else if(method=='post'){
+					xhr.open('post',url,async);
+					xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+					xhr.send(data);
+				}
+				
+				xhr.onreadystatechange=function(){
+					if(xhr.readyState==4 && xhr.status==200){
+							success(xhr.responseText)
+					}
+				}
+			}
+		}
+		$.ajax('get','hotel.json',true,"name=zs&age=20",function(response){console.log(response)})
+
+
+
+	</script>
+</body>
+</html>
